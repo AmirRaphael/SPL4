@@ -1,5 +1,4 @@
 class Vaccine:
-
     def __init__(self, _id, _date, _supplier, _quantity):
         self.id = _id
         self.date = _date

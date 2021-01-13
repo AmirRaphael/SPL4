@@ -6,6 +6,8 @@ import DTO
 def main():
     repo = _Repository()
     repo.create_tables()
+
+    # Parsing config file
     with open(sys.argv[1]) as config:
         lines = config.readlines()
         index = 1
@@ -34,6 +36,7 @@ def main():
             args = line.split(",")
             repo.log_dao.insert(DTO.Logistic(int(args[0]), args[1], int(args[2]), int(args[3])))
 
+    # Executing orders from orders file
     with open(sys.argv[2]) as orders, open(sys.argv[3], "w") as output:
         lines = orders.readlines()
         for line in lines:
@@ -44,6 +47,7 @@ def main():
                 repo.send_ship(args[0], int(args[1]))
             a, b, c, d = repo.create_record()
             output.write("{},{},{},{}\n".format(a[0], b[0], c[0], d[0]))
+
     repo.close()
 
 

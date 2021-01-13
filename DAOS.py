@@ -1,15 +1,13 @@
-import sqlite3
-
-
 class Vaccines:
     def __init__(self, conn):
         self._conn = conn
 
     def insert(self, vaccine):
         self._conn.execute("""
-               INSERT INTO vaccines (id, date, supplier, quantity) VALUES (?,?, ?, ?)
+               INSERT INTO vaccines (id, date, supplier, quantity) VALUES (?,?,?,?)
            """, [vaccine.id, vaccine.date, vaccine.supplier, vaccine.quantity])
 
+    # Sends "amount" of vaccines from the distribution center - taking the oldest first
     def send_amount(self, amount):
         c = self._conn.cursor()
         c.execute("""
@@ -81,6 +79,7 @@ class Clinics:
                INSERT INTO clinics (id, location, demand, logistic) VALUES (?, ?, ?, ?)
            """, [clinic.id, clinic.location, clinic.demand, clinic.logistic])
 
+    # Reduces the demand from the specified "location" by "amount"
     def reduce_demand(self, location, amount):
         prev_demand = self.get_demand(location)
         demand = prev_demand - amount

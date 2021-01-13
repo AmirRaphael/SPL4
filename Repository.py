@@ -14,7 +14,6 @@ class _Repository:
     def close(self):
         self._conn.commit()
         self._conn.close()
-        # TODO: register atexit
 
     def create_tables(self):
         self._conn.executescript("""
